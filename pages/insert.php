@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-<h1>Insert New Book</h1>
+<h1>Insert New Book Gachor</h1>
 
 <form method="post" action="">
     <label for="book_name">Book Name:</label>
