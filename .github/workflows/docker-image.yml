@@ -20,16 +20,15 @@ jobs:
       run: |
         echo "DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}"
         echo "DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}"
+  
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
       
-    - name: Login to hub
-      uses: docker/login-action@v2
-      with:
-        username: liqueddocker
-        password: dckr_pat_vsc-Fv-7FB-n87uiwLkL0ZWmuZ8
+    - name: Login to private docker registry
+      run: docker login -u hoyomi -p hoyomuwujak 192.168.3.247:5000
 
-    - name: Build and Push
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        push: true
-        tags: liqueddocker/tpa-network-onsite:latest
+    - name: Build and Push Docker Image
+      run: |
+        docker buildx create --use
+        docker buildx build --platform linux/amd64,linux/arm64 -t 192.168.3.247:5000/network-image:latest .
+        docker push 192.168.3.247:5000/network-image:latest
